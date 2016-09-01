@@ -1,3 +1,5 @@
+![example](http://7xjjbg.com1.z0.glb.clouddn.com/cowplot.png)
+
 # R Workshop
 A repo containing the materials for the R workshop.
 
