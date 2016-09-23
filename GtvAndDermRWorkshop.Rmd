@@ -1,176 +1,322 @@
 ---
-title: "GtvAndDermRWorkshop"
+title: "R Workshop"
+author: Geoffrey Hannigan, PhD
 output: html_document
 ---
 
-This is an R markdown file of the R workshop notes. This shows both the code and the output after it is run in R. The shaded regions are the code as written in the **GtvAndDermRWorkshop.R** file. The white boxes how the output as seen in R. The plots generated are also shown in the markdown folder.
+*ghannig\@umich.edu* | *\@iprophage*
+
+## Introduction
+
+This is an R markdown file of the R workshop notes. This shows both the code and the output after it is run in R. The shaded regions are the R code to be run. The white boxes show the output as seen in R. The plots generated are also shown in this markdown folder.
+
+Because this is a short workshop (we could spend a whole course on this subject), the goal is to build a basic set of skills that will equip us to go on to practice/use R more on our own. R is a complex language/environment that takes a long time to master, but this is a solid first step toward that mastery.
+
+## Part 1: R Basics
+### Introduction to RStudio
+R studio is a great tool for easily using R. You can download R studio by visiting the following link:
+
+http://www.rstudio.com/
+
+RStudio sections allow for scripting, running scripts, and visualizing plots, variables, and packages (more on these later). We will be using RStudio for this workshop.
+
+### Basic R Functions
+You can perform functions in R by entering commands into the R command prompt. Some examples are basic addition and multiplication.
 
 ```{r}
-# GTV & Dermatology R Workshop
-# Geoffrey Hannigan
-# Elizabeth Grice Lab
-# University of Pennsylvania
-
-####################
-# Part 1: R Basics #
-####################
-
-### Intro to RStudio ###
-
-# R studio is a great tool for easily using R
-# You can download R studio by visiting the following link:
-# http://www.rstudio.com/
-# RStudio sections allow for scripting, running scripts, and visualizing plots, variables, and packages (more on these later).
-
-### The Basic R Functions ###
-
-# You can perform functions in R by entering commands into the R command prompt
-# Examples are basic addition and multiplication
 2 + 2
 3 * 3
+```
 
-# Comments are sections of code that are not used by R
-# This allows you to type whatever you want after the pound symbol
+Comments are sections of code that are not run in R. This allows you to type whatever you want after the number symbol. This is important for adding comments to your code that describe what you are doing.
+
+```{r}
 2 + 2 #Y ou can use a comment to mention the answer is 4
+```
 
-# Variables are letters or words that represent a value
-# These can be assigned using the equal symbol (=) or an arrow (<-)
+Variables are letters or words that represent a value, just like you use in algebra. These can be assigned using an arrow (<-).
+
+```{r}
 x = 5
 y <- 4*4 # This will assign the result of the equation as y
+# Then we can run it to make sure it worked
+y
+```
 
-# Variables can be used just like the values they represent
-# An example is adding the two values we assigned above
+Variables can be used just like the values they represent. An example is adding the two values we assigned above
+
+```{r}
 x + y # The answer is 21, which is the same as 16+5
+```
 
-### R Functions ###
-# R functions are specialized commands that perform a more complicated task. These are called by typing the name, followed by parenthesis and often some arguments.
-# See the help menu for more details on the specific arguments to include with your function of interest
-# An example of a function is c, which combines values into a vector (we will discuss vectors below).
+### R Functions
+R functions are specialized commands that perform more complicated tasks. These are called by typing the name, followed by parenthesis and often some arguments.See the help menu for more details on the specific arguments to include with your function of interest.
+
+An example of a function is c, which *combines* values into a vector (we will discuss vectors in a minute).
+
+```{r}
 c(1,2,3,4,5)
 c(1:5) # The colon causes R to go through the digits between the first and second number
-# Next we will use functions to install R packages
+```
 
-### R Packages ###
-# R packages are sets of scripts that can be easily added to the working R environment, and often serve specific specialized functions
-# R packages are often stored in CRAN (the Comprehensive R Archive Network; http://cran.r-project.org/)
-# CRAN R packages can be easily installed through the command line
-# install.packages("ggplot2")
-# Once the package is installed, you need to load it into the active R session
+
+### R Packages
+R packages are sets of scripts that can be easily added to the working R environment, and often serve specific specialized functions. R packages are often stored in CRAN (the Comprehensive R Archive Network; http://cran.r-project.org/). CRAN packages can be easily installed through the command line. For example, we can try installing the *ggplot* package, a popular package used for plotting data (note that the output will look different if it is already installed on the system).
+
+```r
+install.packages("ggplot2")
+```
+
+Once the package is installed, we need to load it into the active R session. R does not automatically use all of the installed packages because that could slow the system down.
+
+```{r}
 library("ggplot2") # We will be using this package later
+```
 
-### R Vectors ###
-# A vector is one-dimensional data structure containing a set of values (of the same type)
-# Above we made a vector of numbers using the c function
+### R Vectors
+A vector is one-dimensional data structure containing a set of values of the same type. This is one of the most basic data structures in R. A vector is an effective way to store pieces of data together.
+
+Above we made a vector of numbers using the c function.
+
+```{r}
 c(1:10)
-# A specific value can be extracted from a vector using square brackets
+```
+
+A specific value can be extracted from a vector using square brackets
+
+```{r}
 c(1:10)[3] # Returns the third value of the vector (counting starts at one)
-# Calculations can also be performed on the values of a vector
+```
+
+To illustrate a more powerful use of an R vector, we can perform an arithmetic function on all of the vetor values.
+
+```{r}
 c(1:10) * 5 # The result is a vector with each value multiplied by five
-# There are a lot of other useful functions for R vectors, which you should explore in greater depth
-z <- c(1:10)
+```
+
+There are a lot of other useful functions for R vectors, which we can continue to explore in greater depth.
+
+```{r}
+z <- c(1:10) # Save vector to variable
 length(z) # Get the number of values in the vector z
 mean(z) # Calulate the mean of the vector z
+```
 
-### Data Frames ###
-# A data frame is basically a list of vectors of equal length.
-# It is a tool for storing data tables, and is similar to a spreadsheet in MS Excel
-# As an example, we can look at the "iris" plant dataset, which is already included in R
-# To see the data frame, simply type its name, or use the View function in RStudio
+### Data Frames
+Now for a data frame, a slightly more sophisticated data structure. A data frame is basically a list of vectors of equal length. It is a tool for storing data tables, and is conceptually similar to a spreadsheet in MS Excel As an example, we can look at the "iris" plant dataset, which is already included in R. To see the data frame, simply type its name, or use the View function in RStudio.
+
+```{r}
 iris
 View(iris)
-# The column names can be listed as a vector
+```
+
+The column names can be listed as a vector.
+
+```{r}
 colnames(iris)
-# A row or column can be extracted using square brackets
+```
+
+Like a vector, a row or column can be extracted using square brackets.
+
+```{r}
 iris[2,] # Show the second row of the data frame
 iris[,2] # Show the second column of the data frame as a vector
 iris[,-2] # Show everything except the second column
 iris[,"Sepal.Width"] # Names can also be used to specify a column
 iris[2,2] # Combine the two to the the second field of the second column
-iris$Sepal.Width # Another way of specifying the second column of the data frame, using the column name
-# Calculations can also be performed on columns (or rows) of the data frame
+# Another way of specifying the second column of the
+# data frame, using the column name
+iris$Sepal.Width
+```
+
+We can perform calculations on columns (or rows) of the data frame.
+
+```{r}
 mean(iris$Sepal.Width) # Calculate the mean of the sepal width column values
 median(iris$Sepal.Width) # Calculate median
-100 * iris$Sepal.Width # Multiply every value of the column by 100, and save the values into a vector
+# Multiply every value of the column by 100
+# Output values into a vector
+100 * iris$Sepal.Width
+```
 
-### Plotting with ggplot ###
-# There are multiple options for generating plots in R
-# One of the best options is using the ggplot2 package. This is a little difficult to get used to, but offer a wide range of abilities.
-# Before use, the package needs to be installed and loaded, as described above.
-# As an example, we will generate a box plot of sepal widths, grouped by the species
-# Here the function is first specified, followed by the data frame (iris), the column names used for the x and y axes, and an added section (using plus symbol) to specify generation of a box plot.
+### Plotting with ggplot
+There are many options for generating plots in R. One of the best options is using the ggplot2 package. This is a little difficult to get used to, but offers a wide range of abilities. Before use, the package needs to be installed and loaded, like we described above using the `library` function.
+
+As an example, we will generate a box plot of sepal widths, grouped by species.Here the function is specified first, followed by the data frame (iris), the column names used for the x and y axes, and an added section (using plus symbol) to specify generation of a box plot.
+
+```{r}
 ggplot(iris, aes(x=Species, y=Sepal.Width)) + geom_boxplot()
-ggplot(iris, aes(x=Species, y=Sepal.Width)) + theme_classic() + geom_boxplot() # Add the classic theme
-ggplot(iris, aes(x=Species, y=Sepal.Width)) + theme_classic() + geom_boxplot(color="blue") # Add color to the plot
-ggplot(iris, aes(x=Species, y=Sepal.Width, fill=Species)) + theme_classic() + geom_boxplot() + scale_fill_brewer(palette="Set2") # Add color by group
-ggplot(iris, aes(x=Species, y=Sepal.Width, fill=Species)) + theme_classic() + geom_boxplot() + scale_fill_brewer(palette="Set2") + ggtitle("Iris Sepal Length by Species") # Add a title to the plot
+```
 
+We can make it look different by changing the theme. As the lines start to get long, we can also spread the function across multiple lines.
 
-########################################
-# Part 2: Going Through A Real Example #
-########################################
-# Here we will go through a real example of comparing two group means and plotting the results
-# We are going to use the iris example dataset, which has been saved as a .csv file (means the values are seperated by "," symbol).
-# Before we start working in R, we can open the file in Excel to see what it looks like in an environment we are more used to.
-# In the future we can save a file as a csv for input into R by simply clicking "Save As" and choosing the csv file type.
-# It can be important the the new line symbols are Unix and not Mac or Windows. We can easily fix newlines in an Excel saved csv by opening it in "TextWrangler" and saving the file again, and selecting the Unix newline characters (we will talk a bit more about this in the workshop).
+```{r}
+# Add the classic theme
+ggplot(iris, aes(x=Species, y=Sepal.Width)) +
+  theme_classic() +
+  theme(
+  axis.line.x = element_line(colour = 'black', size=0.5, linetype='solid'),
+  axis.line.y = element_line(colour = 'black', size=0.5, linetype='solid')) +
+  geom_boxplot()
 
-# First we can load the file using the read.delim function
-# To work with the file later, we will assign it to a variable
-# This will be saved as a data frame
-SepalDF <- read.delim("~/git/UPennRWorkshop/IrisRExampleDataset.csv", sep=",", header=TRUE)
-# In RStudio we can now visualize the data frame in an easy spreadsheet format
+# Add color to the plot
+ggplot(iris, aes(x=Species, y=Sepal.Width)) +
+  theme_classic() +
+  theme(
+  axis.line.x = element_line(colour = 'black', size=0.5, linetype='solid'),
+  axis.line.y = element_line(colour = 'black', size=0.5, linetype='solid')) +
+  geom_boxplot(color="blue") 
+
+# Add color by group (using a color palette from the color brewer package)
+ggplot(iris, aes(x=Species, y=Sepal.Width, fill=Species)) +
+  theme_classic() +
+  theme(
+  axis.line.x = element_line(colour = 'black', size=0.5, linetype='solid'),
+  axis.line.y = element_line(colour = 'black', size=0.5, linetype='solid')) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Set2")
+
+# Add a title to the plot
+ggplot(iris, aes(x=Species, y=Sepal.Width, fill=Species)) +
+  theme_classic() +
+  theme(
+  axis.line.x = element_line(colour = 'black', size=0.5, linetype='solid'),
+  axis.line.y = element_line(colour = 'black', size=0.5, linetype='solid')) +
+  geom_boxplot() +
+  scale_fill_brewer(palette="Set2") +
+  ggtitle("Iris Sepal Length by Species") 
+```
+
+# Part 2: Going Through A Real Example
+Now we will go through a real example of comparing two groups of values and plotting the results. We are going to use the iris example dataset, which has been saved as a .csv file (this means the values are seperated by "," symbol). This is a common format that can be used with MS Excel.Before we start working in R, we can open the file in Excel to see what it looks like in an environment we might be more used to. In the future we can save a file as a csv for input into R by simply clicking "Save As" and choosing the csv file type.
+
+It is important that the newline symbols are Unix and not Mac or Windows, which is the format Excel will give the data. We can easily fix newlines in an Excel saved csv by opening it in "TextWrangler" and saving the file again, and selecting the Unix newline characters.
+
+First we want to load the file into R (honestly one of the biggest hurdles when learning R) using the read.delim function. To work with the file later, we will assign it to a variable (see, these variable things are helpful :)). The data table will be saved as a data frame
+
+```{r}
+SepalDF <- read.delim("~/git/RWorkshop/IrisRExampleDataset.csv", sep=",", header=TRUE)
+```
+
+We can visualize the data frame in RStudio as a "spreadsheet-like" object.
+
+```{r}
 View(SepalDF)
-# Note the spaces are replaced by dots. We do not want spaces in our dataset.
+```
 
-# We can use a histogram to see if the data is normally distributed around a mean.
-ggplot(SepalDF, aes(x=Sepal.Width)) + theme_classic() + geom_histogram(binwidth = 0.1)
-# We can also look at it by group using the facet funciton. We can also add color.
-ggplot(SepalDF, aes(x=Sepal.Width)) + theme_classic() + geom_histogram(binwidth = 0.1) + facet_grid(~Species)
+Note the spaces are replaced by dots. We do not want spaces in our dataset.
 
-# Next we are going to calculate the mean sepal widths for each species.
-# Performing the mean over all is very easy
+We can use a histogram to see if the data is normally distributed around a mean.
+
+```{r}
+ggplot(SepalDF, aes(x=Sepal.Width)) +
+  theme_classic() +
+  theme(
+  axis.line.x = element_line(colour = 'black', size=0.5, linetype='solid'),
+  axis.line.y = element_line(colour = 'black', size=0.5, linetype='solid')) +
+  geom_histogram(binwidth = 0.1)
+```
+
+We can also look at it by group using the facet funciton. Why not also add color.
+
+```{r}
+ggplot(SepalDF, aes(x=Sepal.Width)) +
+  theme_classic() +
+  theme(
+  axis.line.x = element_line(colour = 'black', size=0.5, linetype='solid'),
+  axis.line.y = element_line(colour = 'black', size=0.5, linetype='solid')) +
+  geom_histogram(binwidth = 0.1) +
+  facet_grid(~Species)
+```
+
+Next we are going to calculate the mean sepal widths for each species. Performing the mean over all the data is very easy.
+
+```{r}
 mean(SepalDF$Sepal.Width)
-# Getting the mean for every group is slightly more complicated because we have to use the dplyr function
-# First we need to load the plyr package
-# install.packages("plyr")
+```
+
+Getting the mean for every group is slightly more complicated, but made easier by the dplyr function. First we need to load the plyr package.
+
+```r
+install.packages("plyr")
+```
+
+```{r}
 # Load it into the active R session
 library("plyr")
-# Here we are only going to look at only the Setosa and Virginica species, so let's also remove the Versicolor species using the data frame techniques we mentioned above (this is a little more complicated but we will go through it).
-# We are again saving the new data frame result as a variable
+```
+
+No let's only look at the Setosa and Virginica species. We can remove the Versicolor species using the data frame techniques we mentioned above (this is a little more complicated but we will go through it). We are again saving the new data frame result as a variable
+
+```{r}
 SepalDfTwoSpecies <- SepalDF[-which(SepalDF$Species %in% "versicolor"),]
-# To understand what is going on, we can run the different parts of the function
-SepalDF$Species # This specifies only the Species column of the data frame, which is what we want to work with. The output is a vector
-which(SepalDF$Species %in% "versicolor") # Ever row in the data frame has a row number like the row numbers in an Excel spreadsheet. We use which to tell us the row numbers where the Sepal Species value matches (%in%) "versicolor".
--which(SepalDF$Species %in% "versicolor") # This adds a minus sign to each row name
-SepalDF[-which(SepalDF$Species %in% "versicolor"),] # As mentioned above, we can provide row or column numbers in square brackets for extraction. A minus sign tells it to give all rows or columns except the one specified. Here we are getting all of the rows except the ones which had the Species column value of "versicolor".
+# Look at the result
+SepalDfTwoSpecies
+```
+
+To understand what is going on, we can run the different parts of the function independently instead of all at the same time.
+
+```{r}
+SepalDF$Species # This specifies only the Species column
+```
+
+We can use the `%in%` operator to determine which rows of the `Species` column match "versicolor". The output is a vector with the numbers of each row that matched.
+
+```{r}
+which(SepalDF$Species %in% "versicolor")
+```
+
+The minus sign adds a minus sign to each of the row numbers. This will be used to exclude those rows instead of include them.
+
+```{r}
+-which(SepalDF$Species %in% "versicolor")
+```
+
+As we mentioned before, square brackets can be used to specify positions in vectors, as well as data frames. The format is `dataframe[row,column]`. `dataframe[1,]` will return the first row of the data frame, while `dataframe[-1,]` will return all of the rows *except* the first. We will use our vector above of minus sign row numbers to specify the rows we want to exclude, which means we are excluding all of the rows that match "versicolor".
+
+```{r}
+SepalDF[-which(SepalDF$Species %in% "versicolor"),]
 # View the new data frame
 View(SepalDfTwoSpecies)
+```
 
-# Now we can easily calculate the mean and std error of the two groups using the plyr package we loaded above.
+Now we can easily calculate the mean and std error of the two groups using the plyr package we loaded above.
+
+```{r}
 SepalStats <- ddply(SepalDfTwoSpecies, # The dataframe that we wanted to use
-                    c("Species"), # A vector containing the grouping for summary stats
+                    c("Species"), # A vector containing the grouping
                     summarise, # Tell it we want to summarize the data
-                    mean=mean(Sepal.Width), # Calculate the mean Sepal Width for each group we specified
+                    mean=mean(Sepal.Width), # Calculate the mean Sepal Width for each group
                     std_deviation = sd(Sepal.Width), # Calculate standard deviation
                     std_error = sd(Sepal.Width)/sqrt(length(Sepal.Width))) # Calculate standard error
 # We can view the stats in the variable
 View(SepalStats)
+```
 
-# We can now use this data to graph the results as a bar plot using ggplot
-# Use geom_bar to create a bar plot
-# Use geom_errorbar to set the error bars using the column names in our sepal stats data frame
-ggplot(SepalStats, aes(x=Species, y=mean, fill=Species)) + theme_classic() + geom_bar(position=position_dodge(), stat="identity", width=0.5) + geom_errorbar(aes(ymin=mean-std_error, ymax=mean+std_error), width=.2) + scale_fill_brewer(palette="Set2") + ggtitle("Species Difference in Sepal Width")
+We can use this data to graph the results as a bar plot using ggplot. Use `geom_bar` to create a `bar plot`. Use `geom_errorbar` to set the error bars using the column names in our sepal stats data frame.
 
-# This data looks pretty significantly different, but we want to actually run the stats.
-# A very basic statistical test is a t-test for differences between two means.
-# This assumes normally distributed data, which we supported above with the histograms.
-# We can perform this test easily using the most basic t.test function.
-# Here we are telling it the values are in the column before the "~", the column for grouping is in the column specified after the "~", and the data frame containing the columns is specified after the column
+```{r}
+ggplot(SepalStats, aes(x=Species, y=mean, fill=Species)) +
+  theme_classic() +
+  theme(
+  axis.line.x = element_line(colour = 'black', size=0.5, linetype='solid'),
+  axis.line.y = element_line(colour = 'black', size=0.5, linetype='solid')) +
+  geom_bar(position=position_dodge(), stat="identity", width=0.5) +
+  geom_errorbar(aes(ymin=mean-std_error, ymax=mean+std_error), width=.2) +
+  scale_fill_brewer(palette="Set2") +
+  ggtitle("Species Difference in Sepal Width")
+```
+
+This data looks like it is probably significantly different, but we want to actually run the stats. A very basic statistical test is a t-test for differences between two groups. This assumes normally distributed data, which we supported above with the histograms. We can perform this test easily using the basic r `t.test` function.
+
+Here we are telling the function that the values are in the column before the "~", the column for grouping is in the column specified after the "~", and the data frame containing the columns is specified after the column.
+
+```{r}
 SepalTTest <- t.test(Sepal.Width ~ Species, SepalDfTwoSpecies)
 # See the statistics results
 SepalTTest
 # An example if you just want to see the p-value
 SepalTTest$p.value
-# This is a low p-value, so we would say that this difference is significantly different.
 ```
 
+And there we have it, the two groups are significantly different.
