@@ -1,0 +1,337 @@
+---
+title: "Introduction To RMarkdown"
+author: "Geoffrey Hannigan"
+output: html_document
+bibliography: bibliography.bib
+csl: nature.csl
+---
+
+# Introduction to Markdown
+
+RMarkdown is an R-based tool which was built around the R package `knitr` and the tool `pandoc` (we won't worry about these dependencies in this introductory workshop). RMarkdown allows for easy creation of reproducible documents that combine descriptive text and its associated code. RMarkdown has been championed by RStudio and is built into the RStudio platform, making it easier than ever to create these documents.
+
+# Making an R Markdown Document
+
+## Setting Up The Document
+
+To keep things simple, we will run and build our initial R Markdown documents using RStudio. RMarkdown essentially comes built into RStudio so additional installation is minimal.
+
+Click the "new document" button in the top left corner (white box with a green plus symbol) and choose `RMarkdown`. Fill out the additional information including the document type (I suggest starting with html), your name, etc. Once you are done, you will have a blank document with some examples to get started.
+
+The top of the document must start with the YAML (Yaml ain't markup language) header, which is a block specifying the title, author, etc. Here is an example of a simple YAML header, and you can go [here](http://rmarkdown.rstudio.com/html_document_format.html) for more advanced options.
+
+The **output** format (html, PDF, MS Word) can be specified in the YAML header.
+
+```
+---
+title: "New_Document"
+author: "Geoffrey Hannigan"
+date: "1/10/2018"
+output: html_document
+---
+```
+
+## How To Write In Markdown
+
+Markdown is a simple language for writing content on the web or in documents. The purpose of markdown is to write enable writing content without focusing on formating.
+
+### Headers
+
+Headers can be created using number symbols, with each decending level specified by the number of number symbols.
+
+```markdown
+# Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
+####### Header 7
+```
+
+# Header 1
+## Header 2
+### Header 3
+#### Header 4
+##### Header 5
+###### Header 6
+
+### Emphasis
+
+Text can be emphasized using italicized, bold, and struck-through text.
+
+```markdown
+*Italics* can be specified by surrounding text with asterisks.
+
+**Bold** can be specified with surrounding double asterisks.
+
+***Bold & Italics*** can be specified with triple asterisks.
+
+^Superscript^ is specified with carets.
+
+~Subscript~ is specified with tildes.
+
+~~Strikethrough~~ text is specified with double tildes.
+```
+
+*Italics* can be specified by surrounding text with asterisks.
+
+**Bold** can be specified with surrounding double asterisks.
+
+***Bold & Italics*** can be specified with triple asterisks.
+
+^Superscript^ is specified with carets.
+
+~Subscript~ is specified with tildes.
+
+~~Strikethrough~~ text is specified with double tildes.
+
+### Lists
+
+Bulleted and numbered lists can be used.
+
+```markdown
+1. Item one.
+2. Item number two.
+3. Number three.
+
+* Bullet item one.
+* Bullet item two.
+```
+
+1. Item one.
+2. Item number two.
+3. Number three.
+
+* Bullet item one.
+* Bullet item two.
+
+### Links and Images
+
+Links can be added to text, and links to images can be rendered within documents.
+
+```markdown
+Add a link to a website [like this](https://github.com).
+
+![Add images using the same syntax, but with an exclamation point.](https://assets-cdn.github.com/images/modules/logos_page/Octocat.png)
+```
+
+Add a link to a website [like this](https://github.com).
+
+![Add images using the same syntax, but with an exclamation point.](https://assets-cdn.github.com/images/modules/logos_page/Octocat.png)
+
+### Adding Code Chunks To The Text
+
+Generic `inline code` can be rendered by surrounding the text with back-ticks.
+
+Markdown also support syntax highlighted code chunks. To write code in a variety of languages (without running it), surround your code chunk with three back-ticks before and after, with the language specified on the top.
+
+```
+  ```python
+  # This program prints Hello, world!
+  
+  print('Hello, world!')
+  ```
+  
+  ```perl
+  #!/usr/bin/perl
+  #
+  # The traditional first program.
+  
+  # Strict and warnings are recommended.
+  use strict;
+  use warnings;
+  
+  # Print a message.
+  print "Hello, World!\n";
+  ```
+```
+
+```python
+# This program prints Hello, world!
+print('Hello, world!')
+```
+
+```perl
+#!/usr/bin/perl
+#
+# The traditional first program.
+# Strict and warnings are recommended.
+use strict;
+use warnings;
+# Print a message.
+print "Hello, World!\n";
+```
+
+### Creating Tables
+
+Tables are also easy to make. Follow the template below, using the colons to specify whether the contents should be left aligned, centered, or right aligned.
+
+```markdown
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+```
+
+| Tables        | Are           | Cool  |
+| ------------- |:-------------:| -----:|
+| col 3 is      | right-aligned | $1600 |
+| col 2 is      | centered      |   $12 |
+| zebra stripes | are neat      |    $1 |
+
+### Using Block Quotes
+
+Block quotes are another formatting option. These can be created by starting a line with a right arrow `>`.
+
+```
+> This is a quote.
+> This is a continuation of the quote.
+
+Text in the middle.
+
+> And we can start another quote.
+```
+
+> This is a quote.
+> This is a continuation of the quote.
+
+Text in the middle.
+
+> And we can start another quote.
+
+# Running Code in RMarkdown
+
+## Using Code Chunks
+
+The unique strength of RMarkdown is it's ability to run code within the document. This allows you to recreate documents using updated data with only a push of a button (the `knit` button, to be exact). This is great for automatically generating reports each week or month, as well as updating information like p-values in your paper after your changed some of the source data. This is also a great way to provide context to your code and keep a sort of "code notebok". And it even supports additional languages beyond R, if that is your thing. Generating code in an RMarkdown file is pretty easy once you get the hang of it.
+
+You can start by writing an R code chunk with markdown syntax, although you want to include curly brackets around your language (although don't include the space before the `r`).
+
+```
+  ```{ r}
+  
+  ```
+```
+
+Knitting the document will have R run your code chunk and provide both the code you used, as well as the output. We can visualize a data table as an example.
+
+```
+  ```{ r}
+  summary(iris)
+  ```
+```
+
+```{r}
+summary(iris)
+```
+
+Note that you can even preview your code chunk output by clicking the green arrow in your RStudio RMarkdown document. Try it out, it's pretty cool.
+
+You might have noticed that the output of that data frame (table) is pretty ugly. We would much rather have it output as a cleaner table. We can accomplish this using a variety of libraries, but here we are going to use kable, a very popular package. Don't forget to call the library, in your code chunk, or else it won't exist when R runs your code.
+
+```
+  ```{ r}
+  # Load in your knitr library
+  library("knitr")
+  # Use head to only show the top few rows and save on space
+  kable(head(iris))
+  ```
+```
+
+```{r}
+# Load in your knitr library
+library("knitr")
+# Use head to only show the top few rows and save on space
+kable(head(iris))
+```
+
+You might only want to show the output from your code and not the code itself. This is an easy task to accomplish if you use the `echo` parameter.
+
+```
+  ```{ r, echo = FALSE}
+  # Load in your knitr library
+  library("knitr")
+  # Use head to only show the top few rows and save on space
+  kable(head(iris))
+  ```
+```
+
+```{r, echo = FALSE}
+# Load in your knitr library
+library("knitr")
+# Use head to only show the top few rows and save on space
+kable(head(iris))
+```
+
+You can do the opposite task as well. Go ahead and set the eval function to include your code without actually running it.
+
+```
+  ```{ r, eval = FALSE}
+  # Load in your knitr library
+  library("knitr")
+  # Use head to only show the top few rows and save on space
+  kable(head(iris))
+  ```
+```
+
+```{r, eval = FALSE}
+# Load in your knitr library
+library("knitr")
+# Use head to only show the top few rows and save on space
+kable(head(iris))
+```
+
+## Writing Inline R Code
+
+R code can also be included inline, instead of a code chunk. Inline code can be created by writing the line of code after the letter r in back-ticks. In this document, we can calculate the mean sepal width in the iris dataset as `r mean(iris$Sepal.Width)`. Only the value is displayed, and not the code.
+
+## Plotting With R Code
+
+We can also add plots of our data.
+
+```
+  ```{ r, eval = FALSE}
+  plot(pressure)
+  ```
+```
+
+```{r}
+plot(pressure)
+```
+
+Interactive plots can also be embedded in the RMarkdown document using the package `plotly`. You can read more about plotly at their [website](https://plot.ly/r/).
+
+```{r}
+library(plotly)
+plot_ly(data = iris, x = ~Sepal.Length, y = ~Petal.Length)
+```
+
+# Works Cited
+
+An important aspect of writing scientific documents is citing sources. The RMarkdown environment provides a useful toolkit for citing sources within documents. To get started, you need a file with your citation information, which needs to be written in `bibtex` format. The file is specified in the YAML header at the top of the document. An example of a `bibtex` citation is below.
+
+```bibtex
+@article{10.7717/peerj.2959,
+ title = {Evolutionary and functional implications of hypervariable loci within the skin virome},
+ author = {Hannigan, Geoffrey D. and Zheng, Qi and Meisel, Jacquelyn S. and Minot, Samuel S. and Bushman, Frederick D. and Grice, Elizabeth A.},
+ year = 2017,
+ month = feb,
+ keywords = {Bacteriophage, Genomic variability, Metagenomics, Evolution, Virome, Dermatology},
+ volume = 5,
+ pages = {e2959},
+ journal = {PeerJ},
+ issn = {2167-8359},
+ url = {https://doi.org/10.7717/peerj.2959},
+ doi = {10.7717/peerj.2959}
+}
+```
+
+The citation style also needs to be specified using a `csl` format file. Luckily, there is a freely avialable database with citation styles for most journals [here](https://github.com/citation-style-language/styles). The file name can also be specified in the YAML header.
+
+Once the citation data is setup, you can cite sources in the text by enclosing the citation ID, which is found at the beginning of the bibtex citation, within square brackets. The ID needs to follow an `@` like `[@10.7717/peerj.2959]`. The citation can be put at the end of a line just like an other citation tool [@10.7717/peerj.2959].
+
+The references will be placed at the end of the document. Simply add a `References` header to the end of the RMarkdown file for the references section.
+
+# References
